@@ -1,10 +1,10 @@
 import { toggleNoteImportance } from "@/app/actions/notes";
-import { getNoteById, toggleImportance } from "@/app/services/notes";
+import { getNoteById } from "@/app/services/notes";
 import { notFound } from "next/navigation";
 
 const NotePage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const note = getNoteById(Number(id));
+  const note = await getNoteById(Number(id));
   if (!note) {
     notFound();
   }
