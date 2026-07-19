@@ -8,6 +8,20 @@
       "when": 1784372401925,
       "tag": "0000_opposite_meteorite",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1784439388471,
+      "tag": "0001_careful_victor_mancha",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784439653821,
+      "tag": "0002_unusual_sheva_callister",
+      "breakpoints": true
     }
   ]
 }
