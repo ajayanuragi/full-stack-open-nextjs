@@ -8,6 +8,13 @@
       "when": 1784382462179,
       "tag": "0000_lovely_millenium_guard",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1784444950102,
+      "tag": "0001_nice_kabuki",
+      "breakpoints": true
     }
   ]
 }
