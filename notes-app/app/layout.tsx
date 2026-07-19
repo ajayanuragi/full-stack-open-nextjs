@@ -1,4 +1,3 @@
-import Link from "next/link";
 import AuthSessionProvider from "./components/SessionProvider";
 import Navbar from "./components/Navbar";
 export default function RootLayout({

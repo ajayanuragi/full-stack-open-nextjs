@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { blogs } from "@/db/schema";
-import { desc, eq, ilike, sql } from "drizzle-orm";
+import { desc, eq, ilike } from "drizzle-orm";
 
 export const getBlogs = async (filter = "") => {
   return db.query.blogs.findMany({
