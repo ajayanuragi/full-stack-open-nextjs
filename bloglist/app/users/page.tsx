@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getUsers } from "../services/users";
+import Link from "next/link";
 
 const Users = async () => {
   const users = await getUsers();
@@ -11,7 +12,9 @@ const Users = async () => {
       <h2>Users</h2>
       <ul>
         {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
+          <li key={user.id}>
+            <Link href={`/users/${user.username}`}>{user.name}</Link>
+          </li>
         ))}
       </ul>
     </div>
