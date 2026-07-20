@@ -3,26 +3,42 @@ import { revalidatePath } from "next/cache";
 import { addBlog, like } from "../services/blogs";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+type CreateBlogState = {
+  error: string;
+  errors?: Record<string, string>;
+  values?: {
+    title: string;
+    author: string;
+    url: string;
+  };
+};
 
 export const createBlog = async (
-  prevState: { error: string },
+  prevState: CreateBlogState,
   formData: FormData,
-) => {
+): Promise<CreateBlogState> => {
   const session = await auth();
   if (!session) {
     redirect("/login");
   }
   const title = formData.get("title") as string;
-  if (!title || title.length < 5) {
-    return { error: "title must be at least 5 characters long" };
-  }
   const url = formData.get("url") as string;
-  if (!url || url.length < 5) {
-    return { error: "url must be at least 5 characters long" };
-  }
   const author = formData.get("author") as string;
-  if (!author || author.length < 5) {
-    return { error: "author must be at least 5 characters long" };
+
+  const errors: Record<string, string> = {};
+  if (title.length < 5) errors.title = "Title must be at least 5 characters";
+  if (author.length < 5) errors.author = "Author must be at least 5 characters";
+  if (url.length < 5) errors.url = "URL must be at least 5 characters";
+  if (Object.keys(errors).length > 0) {
+    return {
+      error: "Validation failed",
+      errors,
+      values: {
+        title,
+        author,
+        url,
+      },
+    };
   }
 
   await addBlog(title, url, author, 0);
