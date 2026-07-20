@@ -27,8 +27,8 @@ const NewBlog = () => {
     }
   }, [state, showNotification, router]);
   return (
-    <div>
-      <h2>Add new blog</h2>
+    <div className="max-w-2xl mx-auto p-6">
+      <h2 className="text-3xl font-bold mb-4">Add new blog</h2>
       <form action={formAction}>
         <div>
           <label>
@@ -39,6 +39,7 @@ const NewBlog = () => {
               required
               minLength={5}
               defaultValue={state.values?.title}
+              className="px-2 mb-2 ml-2 border rounded"
             />
           </label>
         </div>
@@ -51,6 +52,7 @@ const NewBlog = () => {
               required
               minLength={5}
               defaultValue={state.values?.author}
+              className="px-2 ml-2 mb-2 border rounded"
             />
           </label>
         </div>
@@ -63,10 +65,16 @@ const NewBlog = () => {
               required
               minLength={5}
               defaultValue={state.values?.url}
+              className="px-2 mb-2 ml-2 border rounded"
             />
           </label>
         </div>
-        <button type="submit">add blog</button>
+        <button
+          type="submit"
+          className="bg-gray-800 text-white px-2 py-2 rounded"
+        >
+          add blog
+        </button>
         {state.error && <p style={{ color: "red" }}>{state.error}</p>}
       </form>
     </div>
