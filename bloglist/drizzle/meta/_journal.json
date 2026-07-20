@@ -15,6 +15,13 @@
       "when": 1784444950102,
       "tag": "0001_nice_kabuki",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784512759735,
+      "tag": "0002_parallel_speed_demon",
+      "breakpoints": true
     }
   ]
 }

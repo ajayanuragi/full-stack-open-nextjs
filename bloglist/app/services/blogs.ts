@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { blogs } from "@/db/schema";
 import { desc, eq, ilike } from "drizzle-orm";
+import { getCurrentUser } from "./session";
 
 export const getBlogs = async (filter = "") => {
   return db.query.blogs.findMany({
@@ -30,12 +31,15 @@ export const addBlog = async (
   url: string,
   likes: number,
 ) => {
-  const user = await db.query.users.findFirst();
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error("Not logged in");
+  }
   await db.insert(blogs).values({
     title,
     author,
     url,
     likes,
-    userId: user!.id,
+    userId: user.id,
   });
 };
