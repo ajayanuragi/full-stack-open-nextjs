@@ -11,6 +11,7 @@ type CreateBlogState = {
     author: string;
     url: string;
   };
+  success?: boolean;
 };
 
 export const createBlog = async (
@@ -33,6 +34,7 @@ export const createBlog = async (
     return {
       error: "Validation failed",
       errors,
+      success: false,
       values: {
         title,
         author,
@@ -43,7 +45,7 @@ export const createBlog = async (
 
   await addBlog(title, url, author, 0);
   revalidatePath("/blogs");
-  redirect("/blogs");
+  return { error: "", success: true };
 };
 
 export const increaseLike = async (formData: FormData) => {
