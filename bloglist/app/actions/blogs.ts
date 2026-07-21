@@ -1,8 +1,9 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { addBlog, like } from "../services/blogs";
+import { addBlog, addToReadingList, like } from "../services/blogs";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { getCurrentUser } from "../services/session";
 type CreateBlogState = {
   error: string;
   errors?: Record<string, string>;
@@ -43,7 +44,7 @@ export const createBlog = async (
     };
   }
 
-  await addBlog(title, url, author, 0);
+  await addBlog(title, author, url, 0);
   revalidatePath("/blogs");
   return { error: "", success: true };
 };
@@ -54,4 +55,19 @@ export const increaseLike = async (formData: FormData) => {
   await like(Number(id));
   revalidatePath(`/blogs/${id}`);
   revalidatePath("/blogs");
+};
+
+export const addBlogToReadingList = async (formData: FormData) => {
+  const session = await auth();
+  if (!session?.user?.email) {
+    redirect("/login");
+  }
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/login");
+  }
+
+  const blogId = Number(formData.get("blogId"));
+  await addToReadingList(user?.id, blogId);
+  revalidatePath(`/blogs/${blogId}`);
 };

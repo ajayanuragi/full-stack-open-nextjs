@@ -5,6 +5,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 import { generateToken } from "../actions/me";
+import { getReadingList } from "../services/me";
 
 const MePage = async () => {
   const session = await auth();
@@ -19,7 +20,8 @@ const MePage = async () => {
   if (!user) {
     notFound();
   }
-  console.log(user.token);
+  const readingList = await getReadingList();
+
   return (
     <div className="min-h-screen max-w-2xl mx-auto p-6 text-gray-600">
       <h2 className="font-bold text-2xl text-gray-800">My Profile</h2>
@@ -59,6 +61,20 @@ const MePage = async () => {
             </form>
           </div>
         )}
+      </div>
+      <div>
+        <h2 className="text-2xl font-bold text-black">Reading List</h2>
+        <ul>
+          {readingList &&
+            readingList?.map((item) => (
+              <li key={item.id} className="border-b py-2">
+                <p className="font-bold">{item?.blog?.title}</p>
+                <p>Author: {item?.blog?.author}</p>
+
+                <p>Status: {item?.read ? "Read" : "Not read"}</p>
+              </li>
+            ))}
+        </ul>
       </div>
     </div>
   );
