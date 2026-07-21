@@ -61,3 +61,10 @@ export const isInReadingList = async (userId: number, blogId: number) => {
   });
   return !!item;
 };
+export const markBlogAsRead = async (id: number) => {
+  console.log("marked as read");
+  await db
+    .update(readingList)
+    .set({ read: true })
+    .where(eq(readingList.id, id));
+};

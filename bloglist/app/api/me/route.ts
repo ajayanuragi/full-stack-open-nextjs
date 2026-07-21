@@ -1,6 +1,6 @@
 import { getUserWithBlogs } from "@/app/services/users";
 import { db } from "@/db";
-import { blogs, users } from "@/db/schema";
+import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -1,9 +1,8 @@
 import { addBlogToReadingList, increaseLike } from "@/app/actions/blogs";
 import { getBlogById, isInReadingList } from "@/app/services/blogs";
 import { getCurrentUser } from "@/app/services/session";
-import { auth } from "@/auth";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

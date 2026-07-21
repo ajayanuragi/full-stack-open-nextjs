@@ -4,8 +4,9 @@ import { users } from "@/db/schema";
 
 import { eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
-import { generateToken } from "../actions/me";
+import { generateToken, markRead } from "../actions/me";
 import { getReadingList } from "../services/me";
+import Link from "next/link";
 
 const MePage = async () => {
   const session = await auth();
@@ -21,6 +22,8 @@ const MePage = async () => {
     notFound();
   }
   const readingList = await getReadingList();
+  const unreadBlogs = readingList.filter((item) => !item.read);
+  const readBlogs = readingList.filter((item) => item.read);
 
   return (
     <div className="min-h-screen max-w-2xl mx-auto p-6 text-gray-600">
@@ -34,6 +37,44 @@ const MePage = async () => {
         <p>
           <span className="font-bold">Username:</span> {user.username}
         </p>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold text-black my-4">Reading List</h2>
+        <h3 className="text-xl font-bold text-black mt-4">
+          Unread ({unreadBlogs.length})
+        </h3>
+        <ul>
+          {unreadBlogs?.map((item) => (
+            <li key={item.id} className="border-b py-2 flex items-center gap-4">
+              <Link className="font-bold" href={`/blogs/${item.blog?.id}`}>
+                {item?.blog?.title}
+              </Link>
+              <form action={markRead}>
+                <input type="hidden" name="id" value={item.id} />
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white rounded px-1 py-1 text-sm hover:bg-green-500"
+                >
+                  mark as read
+                </button>
+              </form>
+            </li>
+          ))}
+        </ul>
+
+        <h3 className="text-xl font-bold text-black mt-4">
+          Read ({readBlogs.length})
+        </h3>
+        <ul>
+          {readBlogs.map((item) => (
+            <li key={item.id} className="border-b py-2 flex items-center gap-4">
+              <Link className="font-bold" href={`/blogs/${item.blog?.id}`}>
+                {item?.blog?.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div>
@@ -61,20 +102,6 @@ const MePage = async () => {
             </form>
           </div>
         )}
-      </div>
-      <div>
-        <h2 className="text-2xl font-bold text-black">Reading List</h2>
-        <ul>
-          {readingList &&
-            readingList?.map((item) => (
-              <li key={item.id} className="border-b py-2">
-                <p className="font-bold">{item?.blog?.title}</p>
-                <p>Author: {item?.blog?.author}</p>
-
-                <p>Status: {item?.read ? "Read" : "Not read"}</p>
-              </li>
-            ))}
-        </ul>
       </div>
     </div>
   );
