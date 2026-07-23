@@ -25,23 +25,38 @@ export default function LoginPage() {
     }
   };
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="mx-auto my-10 w-lg rounded-sm px-6 py-6">
+      <h2 className="text-2xl font-bold text-black">Login</h2>
       {error && <p style={{ color: "red" }}> {error}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="py-4">
         <div>
           <label>
             Username
-            <input type="text" name="username" required />
+            <input
+              type="text"
+              name="username"
+              required
+              className="w-full outline rounded px-2"
+            />
           </label>
         </div>
-        <div>
+        <div className="my-4">
           <label>
             Password
-            <input type="password" name="password" required />
+            <input
+              type="password"
+              name="password"
+              required
+              className="w-full outline rounded px-2"
+            />
           </label>
         </div>
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          className="my-4 bg-gray-800 text-background px-4 py-2 rounded w-full"
+        >
+          Login
+        </button>
       </form>
     </div>
   );

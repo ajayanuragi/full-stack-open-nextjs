@@ -11,15 +11,21 @@ const Blogs = async ({
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Blogs</h2>
-      <form>
+      <h2 className="text-3xl font-bold mb-4">Blogs</h2>
+      <form className="flex items-center justify-center gap-4">
         <input
           type="text"
           name="filter"
           defaultValue={filter}
           placeholder="Search blogs..."
+          className="w-10/12 outline rounded px-4 py-2"
         />
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          className="my-4 bg-gray-800 text-background px-4 py-2 rounded w-1/6"
+        >
+          Search
+        </button>
       </form>
       <ul className="space-y-2">
         {blogs.map((blog) => (
